@@ -1,4 +1,18 @@
+# Hulu 2.0 Clone
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+## Initial Setup And Running The WebApp
+    1. Go To https://www.themoviedb.org/
+    2. Login or Create Account
+    3. Go to Settings >> API >> Copy Your "API-KEY" (v3 auth)
+    4. If You don't have an api key then create it
+    5. git clone https://github.com/Rudraditya-Thakur/Hulu-2.0-Clone.git
+    6. cd Hulu-2.0-Clone/
+    7. touch .env.local
+    8. Fill in the Following details
+            API_KEY="YOUR-API-KEY"
+    9. npm run dev
 
 ## Getting Started
 
@@ -32,4 +46,4 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# Netflix-2.0
+

@@ -1,53 +1,28 @@
 import Head from 'next/head'
-import requests from "../utils/requests"
-import Rows from '../components/Rows';
-import Header from '../components/Header';
+import Header from '../components/Header'
+import Results from '../components/Results'
+import requests from '../utils/requests'
 
-export default function Home({genres}) {
+export default function Home({results}) {
   return (
-    <div>
+    <div className='bg-[#02040e]'>
       <Head>
         <title>Netflix 2.0</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className='bg-[#040714] text-white'>
-        <Header />
-        {genres.map((genre) => (
-          <Rows key={genre.id} genre={genre} />
-        ))}
-      </div>
+      <Header />
+      <Results results={results.results}/>
     </div>
   )
 }
 
-export async function getServerSideProps() {
-  const fetchTrending = await fetch(`https://api.themoviedb.org/3${requests.fetchTrending}`);
-  // const fetchNetflixOriginals = await fetch(`https://api.themoviedb.org/3${requests.fetchNetflixOriginals}`);
-  const fetchTopRated = await fetch(`https://api.themoviedb.org/3${requests.fetchTopRated}`);
-  const fetchActionMovies = await fetch(`https://api.themoviedb.org/3${requests.fetchActionMovies}`);
-  const fetchComedyMovies = await fetch(`https://api.themoviedb.org/3${requests.fetchComedyMovies}`);
-  const fetchHorrorMovies = await fetch(`https://api.themoviedb.org/3${requests.fetchHorrorMovies}`);
-  const fetchRomanceMovies = await fetch(`https://api.themoviedb.org/3${requests.fetchRomanceMovies}`);
-  const fetchDocumentaries = await fetch(`https://api.themoviedb.org/3${requests.fetchDocumentaries}`);
-
-  var fetchTrendingData = await fetchTrending.json();
-  // var fetchNetflixOriginalsData = await fetchNetflixOriginals.json();
-  var fetchTopRatedData = await fetchTopRated.json();
-  var fetchActionMoviesData = await fetchActionMovies.json();
-  var fetchComedyMoviesData = await fetchComedyMovies.json();
-  var fetchHorrorMoviesData = await fetchHorrorMovies.json();
-  var fetchRomanceMoviesData = await fetchRomanceMovies.json();
-  var fetchDocumentariesData = await fetchDocumentaries.json();
-
+export async function getServerSideProps(context) {
+  const genre = context.query.genre;
+  const request = await fetch(`https://api.themoviedb.org/3${requests[genre]?.url || requests.fetchTrending.url}`);
+  var data = await request.json();
   return {
-    props : {
-      genres: [
-        fetchTrendingData, 
-        // fetchNetflixOriginalsData,
-        fetchTopRatedData, fetchActionMoviesData,
-        fetchComedyMoviesData, fetchHorrorMoviesData,
-        fetchRomanceMoviesData, fetchDocumentariesData,
-      ]
+    props: {
+      results: data,
     }
   }
 }
